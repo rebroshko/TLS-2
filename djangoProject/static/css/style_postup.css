@@ -1,0 +1,98 @@
+/* Поля ввода полной ширины */
+input[type=text], input[type=password] {
+  width: 100%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+}
+
+/* Установите стиль для всех кнопок */
+.header__reg {
+	width: 7rem;
+	margin-right: 1rem;
+	background: #2855CB;
+	-webkit-box-shadow: -2px 4px 11px 2px rgba(0, 0, 0, 0.08);
+	        box-shadow: -2px 4px 11px 2px rgba(0, 0, 0, 0.08);
+	border-radius: 5px;
+	-webkit-transition: all ease .3s;
+	-o-transition: all ease .3s;
+	transition: all ease .3s;
+	color: #fff;
+}
+.header__reg:hover {
+	background-color: #2F4886;
+}
+.header__reg:focus {
+	-webkit-box-shadow: -2px 4px 11px 2px rgba(0, 0, 0, 0.08), inset 0px 4px 4px rgba(0, 0, 0, 0.25);
+	        box-shadow: -2px 4px 11px 2px rgba(0, 0, 0, 0.08), inset 0px 4px 4px rgba(0, 0, 0, 0.25);
+	background-color: #616161;
+}
+
+
+/* Центрируйте изображение и установите кнопку Закрыть */
+.imgcontainer3 {
+  text-align: center;
+  margin: 24px 0 12px 0;
+  position: relative;
+}
+
+.container3 {
+  padding: 16px;
+}
+
+/* Модальный (фон) */
+.modal3 {
+  display: none; /* Скрыто по умолчанию */
+  position: fixed; /* Оставаться на месте */
+  z-index: 1; /* Сидеть на вершине */
+  left: 0;
+  top: 0;
+  width: 100%; /* Полная ширина */
+  height: 100%; /* Полная высота */
+  overflow: auto; /* Включите прокрутку, если это необходимо */
+  background-color: rgb(0,0,0); /* Цвет запасной вариант  */
+  background-color: rgba(0,0,0,0.4); /*Черный с непрозрачностью */
+  padding-top: 60px;
+}
+
+/* Модальное содержание/бокс */
+.modal3-content {
+  background-color: #fefefe;
+  margin: 5% auto 15% auto; /* 5% сверху, 15% снизу и по центру */
+  border: 1px solid #888;
+  width: 80%; /* Может быть больше или меньше, в зависимости от размера экрана */
+}
+
+/* Кнопка закрытия (x) */
+.close3 {
+  position: absolute;
+  right: 25px;
+  top: 0;
+  color: #000;
+  font-size: 35px;
+  font-weight: bold;
+}
+
+.close3:hover,
+.close3:focus {
+  color: red;
+  cursor: pointer;
+}
+
+/* Добавить анимацию масштабирования */
+.animate3 {
+  -webkit-animation: animatezoom3 0.6s;
+  animation: animatezoom3 0.6s
+}
+
+@-webkit-keyframes animatezoom3 {
+  from {-webkit-transform: scale(0)}
+  to {-webkit-transform: scale(1)}
+}
+
+@keyframes animatezoom3 {
+  from {transform: scale(0)}
+  to {transform: scale(1)}
+}

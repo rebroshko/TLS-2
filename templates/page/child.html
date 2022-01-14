@@ -1,0 +1,160 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ru">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>E-Journal</title>
+        <link href="{% static '/css/main.css' %}" rel="stylesheet">
+    </head>
+
+    <body>
+        <input type="hidden" name="subgroup_id" value="{{ request.user.subgroup.id }}">
+        <header>
+            <div class="header-title">
+                <label>Электронный журнал</label>
+                <div class="header-buttons">
+                    <button onclick="document.location='{% url 'Main:home' %}'" >Главная страница</button>
+                    <a href="/logout/"><button>Выйти</button></a>
+                </div>
+            </div>
+            
+            <div class="header-menu">
+                <div name="selects" class="header-top">
+                    <div class="header-elem">
+                        <p>Предмет:</p>
+                        <select name="subject_id" class="select-header">
+                            <option value="null">-- Выберите --</option>
+                            {% for subj in subjects %}
+                                <option value="{{ subj.id }}">{{ subj.name }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="header-elem">
+                        <p>Период:</p>
+                        <select name="period_name" class="select-header" disabled>
+                            <option value="null">-- Выберите --</option>
+                        </select>
+                    </div>
+                    <button type="submit" id="show-table-button">Показать</button>
+                </div>
+                <div class="header-bottom">
+                    <label class="child-user" name="{{ request.user.id }}">Ученик:<span>{{ request.user.first_name }} {{ request.user.last_name }}</span></label>
+                </div>
+            </div>
+        </header>
+       
+
+        <section>   
+            <div class="content-block">
+                <label class="label-bad">По вашему запросу ничего не найдено</label>
+                <div class="content-header">
+                    <table class="table-block">
+                        <tr class="row main-row">
+                            <td class="td-fio-main">Предмет</td>
+
+                            <td class="td-average">Средняя оценка</td>
+                            <!-- <td class="td-period-mark">Оценка за период</td> -->
+                        </tr>
+                        <tbody class="table-body">
+                            <tr class="row">
+                                <td class="td-fio" id="td-lesson" data-lesson=""></td>
+
+                                <td class="td-average" id="average-mark"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+        
+        
+    </body>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script type="text/javascript">
+
+        $(document).ready(function() {
+            $('.label-bad').show();
+            $('.content-header').hide();
+
+
+            function selectPeriodChange() {
+                const subgroupId = $(`input[name=subgroup_id]`).val();
+                const subjectId = $(`select[name=subject_id] option:selected`).val();
+                if ((subgroupId !== "null") && (subjectId !== "null")) {
+                    $.get(`/api/getPeriod?subgroupid=${subgroupId}&subjectid=${subjectId}`).done(result => {
+                        const periodSelector = $(`select[name=period_name]`);
+                        periodSelector.empty();
+                        periodSelector.append('<option value="null">-- Выберите --</option>');
+                        result.map(item => {
+                            periodSelector.append(`<option value=${item.id}>${item.name}</option>`);
+                        });
+                        periodSelector.attr('disabled', false);
+                    });
+                }
+                else {
+                    const periodSelector = $(`select[name=period_name]`);
+                    periodSelector.empty();
+                    periodSelector.append('<option value="null">-- Выберите --</option>'); 
+                    periodSelector.attr('disabled', true);
+                }  
+            }
+
+
+            $('select[name=subject_id]').on('change', function() {
+                selectPeriodChange()
+            });
+
+
+            $('#show-table-button').on('click', function() {
+                var subId = $(`select[name=subject_id] option:selected`).val();
+                var periodName = $(`select[name=period_name] option:selected`).val();
+
+                if ((subId !== "null") && (periodName !== "null") ) {
+                    $.get(`/api/getTable?subid=${subId}&periodname=${periodName}&child=true`).done(result => {
+                        if (result == 'bad') {
+                            $('.label-bad').show();
+                            $('.content-header').hide();
+                        } else {
+                            var averageCount = 0;
+                            var average = 0;
+
+                            $('.label-bad').hide();
+                            $('.content-header').show();
+                            $('td[class="td-date-mark"]').remove();
+
+                            $('#td-lesson').text($(`select[name="subject_id"] option:selected`).text());
+                            $('#td-lesson').attr('data-lesson', $(`select[name="subject_id"] option:selected`).val());
+
+
+                            result.map(lesson => {
+                                var lessonDay = lesson.date.split("-")[2];
+                                $('td[class="td-fio-main"]').after(`<td class="td-date-mark" lesson-date="${lesson.date}">${lesson.date}</td>`);
+                                if (lesson.mark) {
+                                    $(`.td-fio`).after(`<td class="td-date-mark" marks-lesid="${lesson.id}">${lesson.mark}</td>`);
+                                    averageCount += 1;
+                                    average += parseInt(lesson.mark);
+                                } else {
+                                    $(`.td-fio`).after(`<td class="td-date-mark"> </td>`);
+                                }
+                            });
+
+                            $(`#average-mark`).text(averageCount == 0 ? 0 : ((average / averageCount).toFixed(2)));
+                        }
+                    });
+                } else {
+                    alert("Заполните все поля фильтра");
+                }
+            });
+
+            $(document).on('change', function() {
+            });
+
+        });
+
+        
+
+    </script>
+
+</html>

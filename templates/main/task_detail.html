@@ -1,0 +1,20 @@
+{% extends 'main/base.html' %}
+
+{% block title %}
+{{ task.title }}
+{% endblock %}
+
+{% block content %}
+        <div style="background: url(/static/site/fon.jpg); background-size: 100%; opacity: 70%;">
+            <ul class="news_ab">
+                <img src="{{ task.img.url }}" width="80%"  alt="TLS">
+                <h3>
+                {{ task.title }}
+                </h3>
+                <li> {{ task.text }}</li>
+                <li> {{ task.text1 }}</li>
+                <p>{{ task.time }}</p>
+            </ul>
+        </div>
+
+{% endblock %}

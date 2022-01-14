@@ -1,0 +1,26 @@
+{% extends 'main/base.html' %}
+
+{% block title %}
+Новости
+{% endblock %}
+
+{% block content %}
+    {% for task in task_list %}
+        <a href="{% url 'newsdeteil' task.id %}">
+        <div class="news">
+            <nav>
+                <h3>
+                {{ task.title }}
+                </h3>
+            <ul>
+                <div >
+                   <img src="{{ task.img.url }}" width="250" height="248 "  alt="TLS">
+                </div>
+                <li> {{ task.text }}</li>
+                <p>{{ task.time }}</p>
+            </ul>
+            </nav>
+        </div>
+        </a>
+    {% endfor %}
+{% endblock %}

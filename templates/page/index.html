@@ -1,0 +1,312 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ru">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>E-Journal</title>
+        <link href="{% static '/css/main.css' %}" rel="stylesheet">
+    </head>
+
+
+    <body>
+        <header>
+            <div class="header-title">
+                <label>Электронный журнал</label>
+                <div class="header-buttons">
+                    {% if request.user.is_superuser %}
+                        <a href="/admin/"><button>Админ-панель</button></a>
+                    {% endif  %}
+                    <button onclick="document.location='{% url 'Main:home' %}'" >Главная страница</button>
+                    <button id="show-modal">Добавить урок</button>
+                    <a href="/logout/"><button>Выйти</button></a>
+                </div>
+            </div>
+            
+            <div class="header-menu">
+                <div name="selects" class="header-top">
+                    <div class="header-elem">
+                        <p>Школа:</p>
+                        <select name="school_id" class="select-header">
+                           <option value="null">-- Выберите --</option>
+                            {% for school in schools %}
+                                <option value="{{ school.id }}" {% if school.id|stringformat:"i" == request.GET.school_id %}selected{% endif %}>{{school.address }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="header-elem">
+                        <p>Группа:</p>
+                        <select name="group_id" class="select-header select-class" disabled>
+                            <option value="null">-- Выберите --</option>
+                        </select>
+                    </div>
+                    <div class="header-elem">
+                        <p>Подгруппа:</p>
+                        <select name="sub_group_id" class="select-header select-class" disabled>
+                            <option value="null">-- Выберите --</option>
+                        </select>
+                    </div>
+                    <div class="header-elem">
+                        <p>Предмет:</p>
+                        <select name="subject_id" class="select-header" disabled>
+                            <option value="null">-- Выберите --</option>
+                        </select>
+                    </div>
+                    <div class="header-elem">
+                        <p>Период:</p>
+                        <select name="period_name" class="select-header" disabled>
+                            <option value="null">-- Выберите --</option>
+                        </select>
+                    </div>
+                    <button type="submit" id="show-table-button">Показать</button>
+                </div>
+                <div class="header-bottom">
+                    <label>Учитель:<span>{{ request.user.first_name }} {{ request.user.last_name }}</span></label>
+                </div>
+            </div>
+        </header>
+       
+
+        <section>  
+            <div class="content-block">
+                <label class="label-bad">По вашему запросу ничего не найдено</label>
+                <div class="content-header">
+                    <table class="table-block">
+                        <tr class="row main-row">
+                            <td class="td-number">№</td>
+                            <td class="td-fio-main">Ученики</td>
+
+                            <td class="td-average">Средняя оценка</td>
+                            <!-- <td class="td-period-mark">Оценка за период</td> -->
+                        </tr>
+                        <tbody class="table-body">
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+
+        <div id="modal-lesson">
+            <div class="modal-block">
+                <div class="close"></div>
+                <div class="modal-area">
+                    <input type="date" name="lesson-date">
+                    <button id="button-modal">Создать</button>
+                    <p>После создания урока обновите страницу или нажмите кнопку "Показать".</p>
+                </div>
+            </div>
+        </div>
+        
+        
+    </body>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script type="text/javascript">
+
+        $(document).ready(function() {
+            $('.label-bad').show();
+            $('.content-header').hide();
+            $('#modal-lesson').hide();
+
+
+            $(document).on('click', '#show-modal', function() {
+                $('#modal-lesson').show();
+            });
+
+            $(document).on('click', '.close', function() {
+                $('#modal-lesson').hide();
+            });
+
+            $(document).on('click', '#button-modal', function() {
+                $('#modal-lesson').hide();
+                var subGroupId = $(`select[name=sub_group_id] option:selected`).val();
+                var subId = $(`select[name=subject_id] option:selected`).val();
+                var date = $(`input[name=lesson-date]`).val();
+
+                $.get(`/api/setLesson?subgroupid=${subGroupId}&subid=${subId}&date=${date}`).done(result => {
+                    if (result[0] == 'bad') {
+                        alert('Заполните поля формы, выбрав нужные данные и повоторите попытку');
+                    } else if (result[0] == 'already') {
+                        alert('Урок уже создан!');
+                    }
+                });
+            });
+
+
+            function selectChange(mainName, urlGet, secondName) {
+                const selectedId = $(`select[name=${mainName}] option:selected`).val();
+                if (selectedId !== "null") {
+                    $.get('/api' + urlGet + '?id=' + selectedId).done(result => {
+                        const groupSelector = $(`select[name=${secondName}]`);
+                        groupSelector.empty();
+                        groupSelector.append('<option value="null">-- Выберите --</option>');
+                        result.map(item => {
+                            groupSelector.append(`<option value=${item.id}>${item.name}</option>`);
+                        });
+                        groupSelector.attr('disabled', false);
+                    });
+                }
+                else {
+                    const groupSelector = $(`select[name=${secondName}]`);
+                    groupSelector.empty();
+                    groupSelector.append('<option value="null">-- Выберите --</option>'); 
+                    groupSelector.attr('disabled', true);
+                }
+            }
+
+            $('select[name=school_id]').on('change', function() {
+                selectChange('school_id', '/getGroups', 'group_id')
+                selectChange('school_id', '/getSubjects', 'subject_id')   
+            });
+
+            $('select[name=group_id]').on('change', function() {
+                selectChange('group_id', '/getSubGroups', 'sub_group_id')   
+            });
+
+
+            function selectPeriodChange() {
+                const subgroupId = $(`select[name=sub_group_id] option:selected`).val();
+                const subjectId = $(`select[name=subject_id] option:selected`).val();
+                if ((subgroupId !== "null") && (subjectId !== "null")) {
+                    $.get(`/api/getPeriod?subgroupid=${subgroupId}&subjectid=${subjectId}`).done(result => {
+                        const periodSelector = $(`select[name=period_name]`);
+                        periodSelector.empty();
+                        periodSelector.append('<option value="null">-- Выберите --</option>');
+                        result.map(item => {
+                            periodSelector.append(`<option value=${item.id}>${item.name}</option>`);
+                        });
+                        periodSelector.attr('disabled', false);
+                    });
+                }
+                else {
+                    const periodSelector = $(`select[name=period_name]`);
+                    periodSelector.empty();
+                    periodSelector.append('<option value="null">-- Выберите --</option>'); 
+                    periodSelector.attr('disabled', true);
+                }  
+            }
+
+
+            $('select[name=sub_group_id]').on('change', function() {
+                selectPeriodChange()
+            });
+
+            $('select[name=subject_id]').on('change', function() {
+                selectPeriodChange()
+            });
+            
+
+            $('#show-table-button').on('click', function() {
+                var schoolId = $(`select[name=school_id] option:selected`).val();
+                var groupId = $(`select[name=group_id] option:selected`).val();
+                var subGroupId = $(`select[name=sub_group_id] option:selected`).val();
+                var subId = $(`select[name=subject_id] option:selected`).val();
+                var periodName = $(`select[name=period_name] option:selected`).val();
+
+                if ((schoolId != "null") && (groupId != "null") && (periodName != "null")) {
+                    $.get(`/api/getTable?schoolid=${schoolId}&groupid=${groupId}&periodname=${periodName}`).done(result => {
+                        if (result == 'bad') {
+                            $('.label-bad').show();
+                            $('.content-header').hide();
+                        } else {
+                            $('.label-bad').hide();
+                            $('.content-header').show();
+                            $('.table-body').html('');
+                            $('td[class="td-date-mark"]').remove();
+
+                            result.lesson.map(lesson => {
+                                var lessonDay = lesson.date.split("-")[2];
+                                $('td[class="td-fio-main"]').after(`<td class="td-date-mark" lesson-date="${lesson.date}">${lesson.date}</td>`);
+                            });
+
+                            var count = 0;
+
+                            result.user.map(user => {
+                                var averageCount = 0;
+                                var average = 0;
+                                var answer = 0;
+                                count = count + 1;
+
+                                // <td class="td-period-mark">2</td>
+                                $('.table-body').append(`<tr class="row" tr-user="${user.id}"><td class="td-number">${count}</td><td class="td-fio" data-user="${user.id}">${user.first_name} ${user.last_name}</td><td class="td-average"></td></tr>`);
+                                
+                                result.lesson.map((les, index) => {
+                                    $(`td[data-user="${user.id}"]`).after(`<td class="td-date-mark" marks-userid="${user.id}" marks-lesid="${les.id}"></td>`);
+                                    $.get(`/api/getMark?userid=${user.id}&lessonid=${les.id}`).done(miniresult => {
+
+                                        $(`td[marks-userid="${user.id}"][marks-lesid="${les.id}"]`).append(`<select class="dates-days-block" data-mark-id="${miniresult[0].id}" data-lesson-id="${les.id}"><option class="mark-date-option" value="none"> </option><option class="mark-date-option" value="A">5</option><option class="mark-date-option" value="B">4</option><option class="mark-date-option" value="C">3</option><option class="mark-date-option" value="D">2</option><option class="mark-date-option" value="ILL">Б</option><option class="mark-date-option" value="UNATTENDED">О</option></select>`);
+
+                                        if ( miniresult[0] != 'bad' ) {
+                                            $(`select[data-mark-id="${miniresult[0].id}"] option[value="${miniresult[0].markchoice}"]`).prop('selected', "selected");
+                                            var number = parseInt($(`select[data-mark-id="${miniresult[0].id}"] option:selected`).text());
+                                            if (Number.isInteger(number)) {
+                                                averageCount += 1;
+                                                average += number;
+                                            }
+                                        } else {
+                                            $(`select[data-mark-id="${miniresult[0].id}"] option[value="none"]`).prop('selected', "selected");
+                                        }
+
+                                        if (index == result.lesson.length - 1){
+                                            answer = average / averageCount;
+                                            $(`tr[tr-user="${user.id}"] td[class="td-average"]`).text(averageCount == 0 ? 0 : answer.toFixed(2));
+                                            average = 0;
+                                            averageCount = 0;
+                                            answer = 0;
+                                        }
+
+                                    });
+                                });
+                            });  
+                        }
+                    });
+                } else {
+                    alert("Заполните все поля фильтра");
+                }
+            });
+            
+
+            $(document).on('change', '.dates-days-block', function() {
+                var mark_val = $(this).val();
+                var user_id = $(this).parents('td').attr('marks-userid');
+                var markid = $(this).attr('data-mark-id');
+                var lesson_id = $(this).attr('data-lesson-id');
+
+                $.get(`/api/setMark?markid=${markid}&userid=${user_id}&lessonid=${lesson_id}&markval=${mark_val}`).done(result => {
+                    if (result[0].answer == 'create') {
+                        $(this).attr('data-mark-id', result[0].mark_id);
+                    } else if (result[0] == 'delete') {
+                        $(this).attr('data-mark-id', 'undefined');
+                    }
+                });
+
+
+                var average = 0;
+                var averageCount = 0;
+
+                $(`tr[tr-user="${user_id}"] option:selected`).each( function(){
+                    var testText = parseInt($(this).text());
+                    if (Number.isInteger(testText)) {
+                        averageCount += 1;
+                        average += parseInt(testText);
+                    }
+                });
+
+                var answer = average / averageCount;
+
+                $(`tr[tr-user="${user_id}"] td[class="td-average"]`).text(averageCount == 0 ? 0 : answer.toFixed(2));
+            });
+
+            $(document).on('change', function() {
+            });
+
+        });
+
+        
+
+    </script>
+
+</html>
+

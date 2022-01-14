@@ -1,0 +1,23 @@
+.login input {
+    display: block;
+    width: 255px;
+    height: 50px;
+    background: #00BFFF;
+    border: 10px gray;
+}
+.login tr td{
+    width: 300px;
+    height: 60px;
+}
+
+.login{
+    margin-top: 10%;
+    display: block;
+    position: absolute;
+    width: 450px;
+    height: 250px;
+    background-color: gainsboro;
+    left: 50%;
+    margin-left: -255px;
+    border-radius: 15px;
+}

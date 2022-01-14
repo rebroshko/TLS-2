@@ -1,0 +1,22 @@
+{% extends 'main/base.html' %}
+
+{% block title %}
+Заявки
+{% endblock %}
+
+{% block content %}
+    {% for ask in ask_list %}
+        <div class="zz">
+            <nav>
+
+                <h4>
+                    {{ ask.id}}  <u>{{ ask.Name }}</u>
+                </h4>
+            <ul>
+                <li> <strong>Номер: </strong> <u>{{ ask.number }}</u>   <strong>E-Mail: </strong>  <u>{{ ask.email }}</u> </li>
+                <p>{{ ask.asktime }}</p>
+            </ul>
+            </nav>
+        </div>
+    {% endfor %}
+{% endblock %}

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="ru">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Новости</title>
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i|Open+Sans:300,300i,400,400i,600,600i,700,700i,800,800i" rel="stylesheet">
+</head>
+    <body>
+    {% include "main/base.html"  %}
+        <main class="main">
+            <div class="container">
+                <div class="events to-enter">
+                    <h2>Задать вопрос</h2>
+                        <form action="{% url 'Main:addfeedback' %}" method="post">
+                            {% csrf_token %}
+                            <ul>
+                                {{ form.as_p }}
+                            </ul>
+                            <center>
+                                <div class="add_but ">
+                                    <button type="submit" class="new_fragment blue-btn ">Спросить</button>
+                                </div>
+                            </center>
+                        </form>
+                </div>
+            </div>
+            {% include "main/podval.html"  %}
+        </main>
+  </body>
+</html>
+
+
+
+

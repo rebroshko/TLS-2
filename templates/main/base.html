@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="ru">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>TLS</title>
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+	<link href="{% static '/css/style.css' %}" rel="stylesheet">
+    <link href="{% static '/css/style_head.css' %}" rel="stylesheet">
+	<link href="{% static '/css/media.css' %}" rel="stylesheet">
+    <link href="{% static '/css/style_postup.css' %}" rel="stylesheet">
+    <link href="{% static '/css/blog.css' %}" rel="stylesheet">
+    <link href="{% static '/css/nicepage.css' %}" rel="stylesheet">
+<style>
+.overlay {
+  height: 100%;
+  width: 0;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  display:none;
+  left: 0;
+  background-color: rgb(0,0,0);
+  background-color: rgba(0,0,0, 0.9);
+  overflow-x: hidden;
+  transition: 0.5s;
+}
+.mob__menu{
+    display: none;
+}
+.overlay-content {
+  position: relative;
+  top: 25%;
+  width: 100%;
+  text-align: center;
+  margin-top: 30px;
+}
+
+.overlay a {
+  padding: 8px;
+  text-decoration: none;
+  font-size: 36px;
+  color: #818181;
+  display: block;
+  transition: 0.3s;
+}
+
+.overlay a:hover, .overlay a:focus {
+  color: #f1f1f1;
+}
+
+.overlay .closebtn {
+  position: absolute;
+  top: 20px;
+  right: 45px;
+  font-size: 60px;
+}
+@media screen and (max-width: 759px) {
+    .overlay{
+        display: block;
+    }
+    .mob__menu{
+        padding-left: 20%;
+        justify-content: center;
+        display: block;
+    }
+}
+@media screen and (max-height: 450px) {
+  .overlay a {font-size: 20px}
+  .overlay .closebtn {
+  font-size: 40px;
+  top: 15px;
+  right: 35px;
+  }
+}
+</style>
+</head>
+<body>
+    <header id="header" class="header">
+            <div class="container">
+                <nav class="header__menu">
+                    <a href="{% url 'Main:home' %}" class="logo">TLS</a>
+                    <div class="header__list">
+                              <li class="header__item"><a href="{% url 'Main:home' %}#news" class="header__link">Новости</a></li>
+                              <li class="dropdown_head">
+                                    <a class="header__link">О проекте</a>
+                                    <div class="dropdown-content_head" style="padding-top: 20px;">
+                                        <a class="header__dropdown-link" href="{% url 'Main:home' %}#Calendar" style="display: block">События</a>
+                                        <a class="header__dropdown-link" href="{% url 'Main:home' %}#svedOorg" style="display: block">О проекте</a>
+                                        <a class="header__dropdown-link" href="{% url 'Main:home' %}#We" style="display: block">Наши преимущества</a>
+                                        <a class="header__dropdown-link" href="{% url 'Main:home' %}#admin" style="display: block">Команда</a>
+                                        <!--<a class="header__dropdown-link" href="" style="display: block">Преподаватели</a>-->
+                                    </div>
+                              </li>
+                              <li class="dropdown_head">
+                                    <a class="header__link">Образование</a>
+                                    <div class="dropdown-content_head" style="padding-top: 20px;">
+                                         <!-- <a class="header__dropdown-link" href="{% url 'Main:home' %}">Твои возможности</a>-->
+                                        <a class="header__dropdown-link" href="{% url 'Main:home' %}#program_lite">Образовательные программы</a>
+
+                                        <a class="header__dropdown-link" href="{% url 'Main:home' %}#We">Принцип обучения</a>
+                                         <!-- <a class="header__dropdown-link" href="{% url 'Main:home' %}#job">Проектная деятельность</a>-->
+                                       <!-- <a class="header__dropdown-link" href="#job">Наша лицензия</a>-->
+                                        <a class="header__dropdown-link" href="{% url 'Main:home' %}#sertif">Документы</a>
+                                        <!--<a class="header__dropdown-link" href="">Олимпиадная деятельность</a>-->
+                                        <!--<a class="header__dropdown-link" href="">Результаты ЕГЭ и ОГЭ</a>-->
+                                    </div>
+                              </li>
+                              <li class="dropdown_head">
+                                    <a class="header__link">Обучение</a>
+                                    <div class="dropdown-content_head" style="padding-top: 20px;">
+                                        <a class="header__dropdown-link" href="{% url 'Main:page1' %}">Обучение в нашем центре</a>
+                                        <a class="header__dropdown-link" href="{% url 'Main:page2' %}">Школы-партнеры</a>
+                                        <a class="header__dropdown-link" href="{% url 'Main:page3' %}">Мастер-классы в лагерях</a>
+                                    </div>
+                             </li>
+                                   <!-- <li class="header__item"><a href="#contact" class="header__link">Галерея</a></li>-->
+                                    <li class="header__item"><a href="{% url 'Main:home' %}#contact" class="header__link">Контакты</a></li>
+                        <a href="javascript:void(0);" style="font-size:15px;" class="icon" onclick="myFunction_head()">&#9776;</a>
+                    </div>
+                    <div id="myNav" class="overlay">
+                        <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+                              <li class="header__item overlay-content"><a href="{% url 'Main:home' %}#news" class="header__link">Новости</a></li>
+                              <li class="dropdown_head overlay-content">
+                                    <a class="header__link">О проекте</a>
+                                    <div class="dropdown-content_head" style="padding-top: 20px;">
+                                        <a class="header__dropdown-link" href="{% url 'Main:home' %}#Calendar" style="display: block">События</a>
+                                        <a class="header__dropdown-link" href="{% url 'Main:home' %}#svedOorg" style="display: block">О проекте</a>
+                                        <a class="header__dropdown-link" href="{% url 'Main:home' %}#We" style="display: block">Наши преимущества</a>
+                                        <a class="header__dropdown-link" href="{% url 'Main:home' %}#admin" style="display: block">Команда</a>
+                                        <!--<a class="header__dropdown-link" href="" style="display: block">Преподаватели</a>-->
+                                    </div>
+                              </li>
+                              <li class="dropdown_head overlay-content">
+                                    <a class="header__link">Образование</a>
+                                    <div class="dropdown-content_head" style="padding-top: 20px;">
+                                         <!-- <a class="header__dropdown-link" href="{% url 'Main:home' %}">Твои возможности</a>-->
+                                        <a class="header__dropdown-link" href="{% url 'Main:home' %}#program_lite">Образовательные программы</a>
+
+                                        <a class="header__dropdown-link" href="{% url 'Main:home' %}#We">Принцип обучения</a>
+                                         <!-- <a class="header__dropdown-link" href="{% url 'Main:home' %}#job">Проектная деятельность</a>-->
+                                       <!-- <a class="header__dropdown-link" href="#job">Наша лицензия</a>-->
+                                        <a class="header__dropdown-link" href="{% url 'Main:home' %}#sertif">Документы</a>
+                                        <!--<a class="header__dropdown-link" href="">Олимпиадная деятельность</a>-->
+                                        <!--<a class="header__dropdown-link" href="">Результаты ЕГЭ и ОГЭ</a>-->
+                                    </div>
+                              </li>
+                              <li class="dropdown_head overlay-content">
+                                    <a class="header__link">Обучение</a>
+                                    <div class="dropdown-content_head" style="padding-top: 20px;">
+                                        <a class="header__dropdown-link" href="{% url 'Main:page1' %}">Обучение в нашем центре</a>
+                                        <a class="header__dropdown-link" href="{% url 'Main:page2' %}">Школы-партнеры</a>
+                                        <a class="header__dropdown-link" href="{% url 'Main:page3' %}">Мастер-классы в лагерях</a>
+                                    </div>
+                             </li>
+                             <!-- <li class="header__item"><a href="#contact" class="header__link">Галерея</a></li>-->
+                             <li class="header__item overlay-content"><a href="{% url 'Main:home' %}#contact" class="header__link">Контакты</a></li>
+                    </div>
+                    <span class="mob__menu" style="font-size:15px;cursor:pointer" onclick="openNav()">&#9776;</span>
+                    <div class="header__btns">
+                            <span class="user">
+                              {% if request.user.is_authenticated %}
+                                <div class="dropdown">
+                                  <button onclick="myFunction()" class=" dropbtn " style="border-radius: 10px;"> {{ user.get_username }} </button>
+                                  <div id="myDropdown" class="dropdown-content" >
+                                      {% if user.is_staff %}
+                                      <a  href="/admin" >Сотрудникам</a>
+                                      <a href="{% url 'logout'%}?next={{request.path}}">Выход</a>
+                                      {% endif %}
+                                      {% if user.is_teacher %}
+
+                                        <a href="{% url 'teacher' %}">Журнал</a>
+                                        <a href="{% url 'logout'%}?next={{request.path}}">Выход</a>
+                                      {% endif %}
+                                      {% if user.subgroup %}
+
+                                        <a href="{% url 'child' %}">Журнал</a>
+                                        <a href="{% url 'logout'%}?next={{request.path}}">Выход</a>
+                                      {% endif %}
+                                  </div>
+                                </div>
+                              {% else %}
+                                <button onclick="document.location='{% url 'login'%}?next={{request.path}}'" style="border-radius: 0.7rem;" type="button" class="dropbtn">Вход</button>
+                              {% endif %}
+                            </span>
+                        <button onclick="document.location='{% url 'Main:addfeedback' %}'" class = 'header__reg' style="border-radius: 0.7rem;">Задать вопрос</button>
+                    </div>
+
+                </nav>
+            </div>
+    </header>
+    {% block header %}
+
+    {% endblock %}
+    <main id="main" class="main">
+        {% block content %}
+
+        {% endblock %}
+
+        {% block podval %}
+
+        {% endblock %}
+    </main>
+
+</body>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"
+  			integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
+  			crossorigin="anonymous"></script>
+ 	<script src="{% static '/js/script.js' %}"></script>
+    <script>
+        function openNav() {
+          document.getElementById("myNav").style.width = "100%";
+        }
+        function closeNav() {
+          document.getElementById("myNav").style.width = "0%";
+        }
+    </script>
+

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="ru">
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="utf-8">
+    <meta name="description" content="">
+    <meta name="page_type" content="np-template-header-footer-from-plugin">
+    <link rel="stylesheet" href="{% static '/css/nicepage.css' %}" media="screen">
+    <link rel="stylesheet" href="{% static '/css/style_news.css' %}" media="screen">
+  </head>
+  <style type="text/css">
+        .my__class {
+            width: 45%;
+            padding: 12px 20px;
+            margin: 8px 0;
+            display: inline-block;
+        }
+        .choice {
+            width: 65%;
+        }
+  </style>
+  <body class="u-body">
+      {% include "main/base.html"  %}
+    <main class="main">
+        <div class="container">
+                <div class="u-container-layout u-block-3b5b-4" style="padding-top: 5%; padding-bottom: 12%; padding-left: 10%; padding-right: 10%">
+                  <h2 class="u-blog-control u-text u-block-3b5b-5" style="margin-top: 0; margin-bottom: 0; margin-left: 0; font-weight: 700" data-block="29" data-block-type="PostHeader">
+                    <a class="u-post-header-link" href="6">{{ calendar.title }}</a>
+                  </h2>
+                  <div class="u-blog-control u-metadata u-text-grey-30 u-block-3b5b-8" style="margin-top: 20px; margin-bottom: 0; margin-left: 0" data-block="31" data-block-type="Metadata">
+                    <span class="u-meta-date u-meta-icon">{{ calendar.publish|date:"j E Y"  }}</span>
+                  </div>
+                  <div class="u-align-justify u-blog-control u-post-content u-text u-block-3b5b-7" style="margin-bottom: 0; margin-top: 5%; margin-left: 0" data-block="32">{{ calendar.body }}</div>
+                </div>
+        </div>
+        <div class="container">
+                <div class="events to-enter">
+
+                        <form action="{{ calendar.get_absolute_url }}" method="post">
+                            {% csrf_token %}
+                            <center>
+                                  <h2>Для участия заполните форму</h2>
+                            <ul class="my__class">
+                                {{ form.as_p }}
+                            </ul>
+                            <div class="det_plus">
+                                <button type="submit" style="border-radius: 1rem; width: 215px; margin-bottom:5%" class="blue-btn new_fragment">Оставить заявку</button>
+                            </div>
+                            </center>
+                        </form>
+                </div>
+        </div>
+
+
+      {% include "main/podval.html"  %}
+	</main>
+  </body>
+</html>

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="ru">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+	<link href="{% static '/css/style.css' %}" rel="stylesheet">
+    <link href="{% static '/css/style_head.css' %}" rel="stylesheet">
+	<link href="{% static '/css/media.css' %}" rel="stylesheet">
+</head>
+<body>
+        <div class="footer">
+			<div class="container">
+				<div class="footer__wrap">
+					<div class="footer__info">
+						<a id="contact" href="{% url 'Main:home' %}" class="footer__logo logo" >TLS</a>
+						<p class="footer__info-text">
+							<span>Казань</span>
+							<a class="footer__phone" href="tel:+7 937 522 9181">+7 937 522 9181</a>
+						</p>
+					</div>
+					<div class="footer__socials">
+						<ul class="footer__list">
+							<li class="footer__item"><a href="https://www.instagram.com/technopolis_kai/" class="footer__link"><img src='{% static "/img/inst.png" %}' alt=""></a></li>
+							<li class="footer__item"><a href="https://vk.com/club202520532" class="footer__link"><img src='{% static "/img/vk.png" %}' alt=""></a></li>
+						</ul>
+					</div>
+				</div>
+				<p class="footer__sub">© 2021  ЦМИТ «Технополис»</p>
+			</div>
+		</div>
+</body>

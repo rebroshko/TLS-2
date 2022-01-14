@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="ru">
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="utf-8">
+    <meta name="description" content="">
+    <meta name="page_type" content="np-template-header-footer-from-plugin">
+    <link rel="stylesheet" href="{% static '/css/nicepage.css' %}" media="screen">
+    <link rel="stylesheet" href="{% static '/css/style_news.css' %}" media="screen">
+    <link id="u-theme-google-font" rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i|Open+Sans:300,300i,400,400i,600,600i,700,700i,800,800i">
+  </head>
+  <body class="u-body">
+      {% include "main/base.html"  %}
+    <main class="main">
+        <div class="container">
+
+
+                <div class="u-container-layout u-block-3b5b-4 set_for_im">
+                  <h2 class="u-blog-control u-text u-block-3b5b-5" style="margin-top: 0; margin-bottom: 0; margin-left: 0; font-weight: 700" data-block="29" data-block-type="PostHeader">
+                    <a class="u-post-header-link" href="6">{{ post.title }}</a>
+                  </h2>
+                  <center>
+                   <img alt="" class="u-image u-image-default u-image-1 new_fragment set_for_news" src="{{ post.cover.url }}">
+                  </center>
+                  <div class="u-blog-control u-metadata u-text-grey-30 u-block-3b5b-8" style="margin-top: 20px; margin-bottom: 0; margin-left: 0" data-block="31" data-block-type="Metadata">
+                    <span class="u-meta-date u-meta-icon">{{ post.publish|date:"j E Y"  }}</span>
+                  </div>
+                  <div class="u-align-justify u-blog-control u-post-content u-text u-block-3b5b-7" style="margin-bottom: 0; margin-top: 20px; margin-left: 0" data-block="32">{{ post.body }}</div>
+                </div>
+        </div>
+
+
+      {% include "main/podval.html"  %}
+	</main>
+  </body>
+</html>
+

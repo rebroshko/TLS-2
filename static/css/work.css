@@ -1,0 +1,48 @@
+.fon2{
+    margin: 0;
+    z-index: -100;
+    position: absolute;
+    display: block;
+    width: 250px;
+    height: 200%;
+    background-color: #00BFFF;
+    opacity: 80%;
+    right: 0;
+    top: 0;
+    border-left: 2px solid black;
+    border-right: 2px solid black;
+}
+
+.fon{
+    margin: 0;
+    z-index: -100;
+    position: absolute;
+    display: block;
+    width: 250px;
+    height: 200%;
+    background-color: #00BFFF;
+    opacity: 80%;
+    left: 0.1px;
+    top: 0;
+    border-right: 2px solid black;
+    border-left: 2px solid black;
+}
+
+.head{
+    display: block;
+    width: 245px;
+    margin-top: 20px;
+    height: 40px;
+    border-bottom: 1px solid black;
+    border-top: 1px solid black;
+    text-align: center;
+    list-style: none;
+    font-size: 25px;
+    font-family: roboto;
+    text-shadow: gray 1px 0 1px;
+}
+.head :hover{
+    background-color: #3f7fe0;
+    opacity: 75%;
+    height: 40px;
+}

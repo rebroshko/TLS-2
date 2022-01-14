@@ -1,0 +1,632 @@
+{% extends "main/base.html" %}
+{% load static %}
+
+
+{% block header %}
+	<link href="{% static '/css/news_now.css' %}" rel="stylesheet">
+	<div class="content">
+			<div class="container">
+				<div class="content__top">
+					<div class="content__head">
+						<h1><span class="underline-text">«Технополис»</span></h1>
+						<p class="content__underheader">
+							Центр молодежного<br>инновационного творчества
+						</p>
+						<div class="content__head-btns">
+							<button id="programs" onclick="window.location.href = '#program_lite'" class="blue-btn new_fragment">Программы обучения</button>
+							<a href="#study_program" id="details">Подробнее >></a>
+						</div>
+					</div>
+					<p class="content__tagline-wrap">
+						<span class="content__tagline"></span>
+					</p>
+				</div>
+				<div class="content__bottom">
+					<p class="content__list-head">
+						Мы сотрудничаем:
+					</p>
+					<ul class="content__list">
+						<li class="footer__item"><a href="https://kai.ru/" class="footer__link"><img src="{% static '/img/content-1.png' %}" alt=""></a></li>
+						<li class="footer__item"><a href="https://www.kstu.ru/index.jsp" class="footer__link"><img src="{% static '/img/content-2.png' %}" alt=""></a></li>
+						<li class="footer__item"><a href="https://www.tisbi.ru/" class="footer__link"><img src="{% static '/img/content-3.png' %}" alt=""></a></li>
+						<li class="footer__item"><a href="https://rhc.aero/structure/kazanskiy-vertoletnyy-zavod" class="footer__link"><img src="{% static '/img/content-4.png' %}" alt=""></a></li>
+						<li class="footer__item"><a href="https://zavod-elecon.ru/" class="footer__link"><img src="{% static '/img/content-5.png' %}" alt=""></a></li>
+						<li class="footer__item"><a href="https://www.icl.ru/" class="footer__link"><img src="{% static '/img/content-7.png' %}" alt=""></a></li>
+					</ul>
+				</div>
+			</div>
+		</div>
+{% endblock %}
+
+	{% block content %}
+		<div class="events">
+			<div class="container">
+				<section class="u-clearfix u-section-1" >
+					<h2 style="margin-bottom: 0;" id="news" ><span class="underline-text">Новости</span></h2>
+				  <div class="u-expanded-width  u-shape u-shape-rectangle u-shape-1"></div>
+				  <div class="u-list u-list-1">
+					<div class="u-repeater u-repeater-1">
+					  {% for post in posts %}
+					  <div class="u-container-style u-list-item u-repeater-item">
+						<div class="u-container-layout u-similar-container u-container-layout-1">
+						  	<h4 class="u-text u-text-4">{{ post.title }}</h4>
+						  <img alt="" class="u-image u-image-default u-image-1 new_fragment" style="border-radius: 0.8rem;" src="{{ post.cover.url }}">
+						  <div class="u-border-1 u-border-grey-dark-1 u-expanded-width-xl u-line u-line-horizontal u-line-1" ></div>
+						  <p class="u-text u-text-5">{{ post.short }}</p>
+								<h5 class="u-text "><br>{{ post.publish|date:"j E Y"  }}</h5>
+							<a  href="{{ post.get_absolute_url }}" class="u-border-10 u-border-active-black u-border-hover-black u-border-palette-2-base u-btn u-btn-rectangle u-button-style u-none u-text-body-color u-text-hover-palette-2-base">Подробнее</a>
+						</div>
+					  </div>
+					  {% endfor %}
+					</div>
+				  </div>
+				</section>
+			</div>
+		</div>
+		<div style="height: 340px;">
+			<div class="container">
+				<section class="u-clearfix on" >
+					<h2 style="margin-bottom: 0;" id="Calendar" >Ближайшие <span class="underline-text">события</span></h2>
+				  	<div class="u-expanded-width  u-shape u-shape-rectangle u-shape-1"></div>
+						  <div class="u-list u-list-1">
+								<div class="u-repeater on">
+									  {% for calendar in calendars %}
+										  <div class="u-container-style u-list-item u-repeater-item">
+											<div class="u-container-layout u-similar-container u-container-layout-1" style="margin-left: 9%;">
+												<h4 class="u-text u-text-4">{{ calendar.title }}</h4>
+
+												<h5 class="u-text u-text-4"> {{ calendar.date_go|date:"j E Y"  }}</h5>
+												<a  href="{{ calendar.get_absolute_url }}" class="u-border-10 u-border-active-black u-border-hover-black u-border-palette-2-base u-btn u-btn-rectangle u-button-style u-none u-text-body-color u-text-hover-palette-2-base u-btn-1">Подробнее</a>
+											</div>
+										  </div>
+									  {% endfor %}
+								</div>
+						  </div>
+				</section>
+			</div>
+		</div>
+		<div class="education">
+			<div class="container">
+				<h2>Образовательные <span id="program_lite" class="underline-text">программы</span></h2>
+				<ul class="ed__list">
+					<li class="ed__item new_fragment">
+						<h3>1-4 классы</h3>
+						<p class="ed__item-text">
+							Учёба с удовольствием – проведём занятия в игровой форме и поможем найти новое хобби
+						</p>
+						<button onclick="window.location.href = '#study_program'" class="ed__item-btn"></button>
+					</li>
+					<li class="ed__item new_fragment">
+						<h3>5-9 классы</h3>
+						<p class="ed__item-text">
+							Оценки станут лучше – расскажем как подтянуть знания по предметам и подготовиться к олимпиаде
+						</p>
+						<button onclick="window.location.href = '#study_program'" class="ed__item-btn"></button>
+					</li>
+					<li class="ed__item new_fragment">
+						<h3>10-11 классы</h3>
+						<p class="ed__item-text">
+							Бюджетное место в вузе мечты  – поможем повторить школьную программу и подготовиться к экзаменам
+						</p>
+						<button onclick="window.location.href = '#study_program'" class="ed__item-btn"></button>
+					</li>
+					<li class="ed__item new_fragment">
+						<h3>Учителя</h3>
+						<p class="ed__item-text">
+							Повышение квалификации  – поможем получить новые знания, обновить план урока и вовлечь всех учеников в учебный процесс
+						</p>
+						<button onclick="window.location.href = '#study_program'" class="ed__item-btn"></button>
+					</li>
+					<li class="ed__item new_fragment">
+						<h3>Обучение студентов</h3>
+						<p class="ed__item-text">
+							Проводим обучение студентов для дальнейшего трудоустройства, подготовка к сессии
+						</p>
+						<button onclick="window.location.href = '#study_program'" class="ed__item-btn"></button>
+					</li>
+					<li class="ed__item new_fragment">
+						<h3>Разработка программ</h3>
+						<p class="ed__item-text">
+							Индивидуальное и корпоративное обучения "под ключ" по желаниям заказчика
+						</p>
+						<button onclick="window.location.href = '#study_program'" class="ed__item-btn"></button>
+					</li>
+				</ul>
+				<button class="blue-btn new_fragment"  onclick="document.location.href='{% url 'Main:program' %}'"  id="more">Подробнее</button>
+			</div>
+		</div>
+		<div class="about">
+			<div class="container">
+				<h2><span id="svedOorg" class="underline-text">О проекте</span> ЦМИТ «Технополис»</h2>
+				<ul class="about__list">
+					<li class="about__item">
+						<img src='{% static "/img/about-1.png" %}' alt="book">
+						<h4>Профили</h4>
+						<p class="about__text">
+							<span class="about__text-head">– Инженерно-технологический</span>
+							Инженерный, ИТ, химический
+						</p>
+						<p class="about__text">
+							<span class="about__text-head">– Социально-экономический</span>
+							Экономика и предпринимательство, юридический, социология и политология
+						</p>
+					</li>
+					<li class="about__item">
+						<img src='{% static "/img/about-2.png" %}' alt="book">
+						<h4>Педагоги</h4>
+						<p class="about__text">
+							<span class="about__text-head">– Кураторы программ</span>
+							Доктора и кандидаты наук (опыт преподавания от 5 лет)
+						</p>
+						<p class="about__text">
+							<span class="about__text-head">– Педагоги доп. образования</span>
+							Представители вузов и предприятий
+						</p>
+					</li>
+					<li class="about__item">
+						<img src='{% static "/img/about-3.png" %}' alt="book">
+						<h4>Наш подход</h4>
+						<p class="about__text">
+							<span class="about__text-head">– Проектное обучение</span>
+							Дети ставят перед собой конкретные цели, получая реальные навыки и знания в процессе их достижения
+						</p>
+						<p class="about__text">
+							<span class="about__text-head">– Развитие soft skills</span>
+							Общаясь и выступая на конференциях, дети развивают в себе необходимые навыки
+						</p>
+					</li>
+				</ul>
+			</div>
+		</div>
+		<div class="other">
+			<div class="container">
+				<h2>Другие <span class="underline-text">наши проекты</span>
+				<br>в области образования детей</h2>
+				<ul class="other__list">
+					<li class="other__item">
+						<img src='{% static "/img/other-1.png" %}' alt="" class="other__img">
+						<h5>Инженерный лицей КНИТУ-КАИ  для одаренных детей</h5>
+					</li>
+					<li class="other__item">
+						<img src='{% static "/img/other-1.png" %}' alt="" class="other__img">
+						<h5>Инженерный лицей КНИТУ-КАИ  для одаренных детей</h5>
+					</li>
+					<li class="other__item">
+						<img src='{% static "/img/other-3.png" %}' alt="" class="other__img">
+						<h5>Инженерный лицей КНИТУ-КАИ  для одаренных детей</h5>
+					</li>
+					<li class="other__item">
+						<img src='{% static "/img/other-1.png" %}' alt="" class="other__img">
+						<h5>Инженерный лицей КНИТУ-КАИ  для одаренных детей</h5>
+					</li>
+				</ul>
+			</div>
+		</div>
+		<div class="we">
+			<div class="container">
+				<h2><span id="We" class="underline-text">Почему мы?</span></h2>
+				<ul class="we__list">
+					<li class="we__item">
+						<div class="we__item-wrap">
+							<img src='{% static "/img/we-1.png" %}' alt="" class="we__img">
+						    <h6>Индивидуальная траектория обучения</h6>
+						    <p class="we__text">
+						    	Каждый обучающийся имеет возможность выбора специ-<br>ализации и формы обучения.
+						    </p>
+						</div>
+					</li>
+					<li class="we__item">
+						<div class="we__item-wrap">
+							<img src='{% static "/img/we-2.png" %}' alt="" class="we__img">
+						    <h6>Специализированная модель обучения</h6>
+						    <p class="we__text">
+							    Комплекс профориентаци-<br>онных мероприятий на <br>базе вузов и предприятий.
+								<br>Инновационные программы обучения.
+						    </p>
+						</div>
+					</li>
+					<li class="we__item">
+						<div class="we__item-wrap">
+							<img src='{% static "/img/we-3.png" %}' alt="" class="we__img">
+						    <h6>Реализация знаний</h6>
+						    <p class="we__text">
+							    Фундаментальное образо-<br>вание, связь теории и <br>практики. <br>Консультация и поддержка<br> при поступлении.
+						    </p>
+						</div>
+					</li>
+					<li class="we__item">
+						<div class="we__item-wrap">
+							<img src='{% static "/img/we-4.png" %}' alt="" class="we__img">
+						    <h6>Результаты</h6>
+						    <p class="we__text">
+							    Проектное обучение.
+								<br>Развиваем soft skills.
+						    </p>
+						</div>
+					</li>
+				</ul>
+			</div>
+		</div>
+		<div class="programs" style="padding-bottom: 0px;">
+			<div class="container">
+				<h2><span id="study_program" class="underline-text">Программы</span> обучения</h2>
+				<ul class="programs__nav">
+					<li class="programs__nav-item">
+						<a class="programs__link" id="it">Информационные технологии</a>
+					</li>
+					<li class="programs__nav-item">
+						<a class="programs__link" id="chemistry">Химический</a>
+					</li>
+					<li class="programs__nav-item">
+						<a class="programs__link" id="engineering">Инженерный</a>
+					</li> <br>
+					<li class="programs__nav-item">
+						<a class="programs__link" id="sociology">Социология и политология</a>
+					</li>
+					<li class="programs__nav-item">
+						<a class="programs__link active" id="economics">Экономика и предпринимательство</a>
+					</li>
+					<li class="programs__nav-item">
+						<a class="programs__link" id="legal">Юридический</a>
+					</li>
+				</ul>
+				<div class="programs__img-wrap">
+					<img class="programs__img new_fragment"         program="it" src='{% static "img/programs-5.png" %}'  alt="">
+					<img class="programs__img new_fragment" 		   program="chemistry" src='{% static "/img/programs-4.png" %}' alt="">
+					<img class="programs__img new_fragment" 	       program="engineering" src='{% static "/img/programs-3.png" %}' alt="">
+					<img class="programs__img new_fragment" 		   program="sociology" src='{% static "/img/programs-6.png" %}' alt="">
+					<img class="programs__img visible new_fragment" program="economics" src='{% static "/img/programs-1.png" %}'  alt="">
+					<img class="programs__img new_fragment" 		   program="legal" src='{% static "/img/programs-2.png" %}' alt="">
+				</div>
+				<ul class="programs__list">
+					<li class="programs__item">
+						<span class="programs__item-head new_fragment"></span>
+						<p class="programs__text visible" program="economics">
+							- Деньги и их происхождение, личные финансы
+							<br>
+							- Основы права
+						</p>
+						<p class="programs__text" program="it">
+							- Scratch <br>
+							- Основы IT технологий
+						</p>
+						<p class="programs__text" program="chemistry">
+							- «Детская» химия <br>
+							- Химия в истории Человечества
+						</p>
+						<p class="programs__text" program="sociology">
+							- Основы социологии <br>
+							- Основы права
+						</p>
+						<p class="programs__text" program="legal">
+							- Личные финансы<br>
+							- Основы права
+						</p>
+						<p class="programs__text" program="engineering">
+							- Основы электроники часть 1 <br>
+							- Основы математической физики, теория чисел
+						</p>
+					</li>
+					<li class="programs__item">
+						<span class="programs__item-head new_fragment"></span>
+						<p class="programs__text visible" program="economics">
+							- Менеджмент, тайм-менеджмент
+							<br>
+							- Психология потребителей
+						</p>
+						<p class="programs__text" program="it">
+							- Алгоритмизация и основы устройства ПК <br>
+							- Основы программирования
+						</p>
+						<p class="programs__text" program="chemistry">
+							- Химия в нашей жизни <br>
+							- Химия и экология
+						</p>
+						<p class="programs__text" program="sociology">
+							- Менеджмент <br>
+							- Психология
+						</p>
+						<p class="programs__text" program="legal">
+							- Менеджмент <br>
+							- Психология
+						</p>
+						<p class="programs__text" program="engineering">
+							- Основы электроники часть 2 <br>
+							- Логика и ТРИЗ
+						</p>
+					</li>
+					<li class="programs__item">
+						<span class="programs__item-head new_fragment"></span>
+						<p class="programs__text visible" program="economics">
+							- Предпринимательство <br>
+							- Инвестиции <br>
+							- PESTLE анализ
+						</p>
+						<p class="programs__text" program="it">
+							- Профильное программирование <br>
+							- Основные языки программирования
+						</p>
+						<p class="programs__text" program="chemistry">
+							- Безопасная работа в химической лаборатории <br>
+							- Химия и будущая профессия
+						</p>
+						<p class="programs__text" program="sociology">
+							- Социологические исследования <br>
+							- Обработка социологических данных <br>
+							- PESTLE анализ
+						</p>
+						<p class="programs__text" program="legal">
+							- Формальные правила<br>
+							- Обычаи делового оборота<br>
+							- PESTLE анализ
+						</p>
+						<p class="programs__text" program="engineering">
+							- Прототипирование<br>
+							- Интернет вещей
+						</p>
+					</li>
+					<li class="programs__item">
+						<span class="programs__item-head new_fragment"></span>
+						<p class="programs__text visible" program="economics">
+							- SMM продвижение <br>
+							- Личный бренд <br>
+							- Проект от CusDev до продаж
+						</p>
+						<p class="programs__text" program="it">
+							- Разработка игр
+						</p>
+						<p class="programs__text" program="chemistry">
+							- Химия и художественное творчество <br>
+							- Бытовая химия
+						</p>
+						<p class="programs__text" program="sociology">
+							- Политические институты <br>
+							- Политический процесс
+						</p>
+						<p class="programs__text" program="legal">
+							- Гражданское право<br>
+							- Адвокатура<br>
+							- Прокуратура
+						</p>
+						<p class="programs__text" program="engineering">
+							- Робототехника (продвинутый уровень, симбиоз дисциплин)
+						</p>
+					</li>
+					<li class="programs__item">
+						<span class="programs__item-head new_fragment"></span>
+						<p class="programs__text visible" program="economics">
+							- Математическое моделирование
+							- Дата-сторителлинг в экономике (о чем говорят цифры) <br>
+							* Подготовка к ОГЭ
+						</p>
+						<p class="programs__text" program="it">
+							- Разработка приложений <br>
+							* Подготовка к ОГЭ
+						</p>
+						<p class="programs__text" program="chemistry">
+							- Химия и питание <br>
+							* Подготовка к ОГЭ
+						</p>
+						<p class="programs__text" program="sociology">
+							- Социальные сети <br>
+							- Анализ социальных сетей, безопасность в соц.сетях <br>
+							* Подготовка к ОГЭ
+						</p>
+						<p class="programs__text" program="legal">
+							- Уголовное право<br>
+							- Состязательный процесс<br>
+							* Подготовка к ОГЭ
+						</p>
+						<p class="programs__text" program="engineering">
+							- Основы математического моделирования<br>
+							- Основы сопромата<br>
+							* Подготовка к ОГЭ
+						</p>
+					</li>
+					<li class="programs__item">
+						<span class="programs__item-head new_fragment"></span>
+						<p class="programs__text visible" program="economics">
+							- Специализированная подготовка к ЕГЭ <br>
+							- Стратегия поступления в вуз
+						</p>
+						<p class="programs__text" program="it">
+							- Разработка сайтов <br>
+							- Веб-моделирование
+						</p>
+						<p class="programs__text" program="chemistry">
+							- Химия в строительстве <br>
+							- Химия в сельском хозяйстве <br>
+							- Химия в медицине
+						</p>
+						<p class="programs__text" program="sociology">
+							- Современная социология и политология <br>
+							- Техническая этика
+						</p>
+						<p class="programs__text" program="legal">
+							- Специальные разделы права<br>
+							- Прецедентное право
+						</p>
+						<p class="programs__text" program="engineering">
+							- Математическое моделирование по отраслям<br>
+							- Теория механизмов и машин
+						</p>
+					</li>
+					<li class="programs__item">
+						<span class="programs__item-head new_fragment"></span>
+						<p class="programs__text visible" program="economics">
+							– Специализированная подготовка к ЕГЭ <br>
+							– Стратегия поступления в ВУЗ
+						</p>
+						<p class="programs__text" program="it">
+							- Специализированная подготовка к ЕГЭ <br>
+							- Стратегия поступления в вуз
+						</p>
+						<p class="programs__text" program="chemistry">
+							- Специализированная подготовка к ЕГЭ <br>
+							- Стратегия поступления в вуз
+						</p>
+						<p class="programs__text" program="sociology">
+							- Специализированная подготовка к ЕГЭ<br>
+							- Стратегия поступления в вуз
+						</p>
+						<p class="programs__text" program="legal">
+							- Специализированная подготовка к ЕГЭ<br>
+							- Стратегия поступления в вуз
+						</p>
+						<p class="programs__text" program="engineering">
+							- Специализированная подготовка к ЕГЭ<br>
+							- Стратегия поступления в вуз
+						</p>
+					</li>
+				</ul>
+			</div>
+		</div>
+		<div class="teachers" >
+			<div class="container">
+				<h2>Наша <span id="admin" class="underline-text">команда</span></h2>
+				<ul class="teachers__list">
+					<li class="teachers__item">
+						<div class="teachers__item-wrap ">
+							<img src='{%static "/img/teachers-1.png" %}' style=" box-shadow: -2px 4px 11px 2px rgb(30 30 30 / 37%); width: 100%; border-radius: 10px;" alt="">
+							<p class="teachers__head">
+								<span class="teacherName">Андрей Викторович Тюрин</span>
+								<br>
+								<span class="teacherSubj">Директор</span>
+							</p>
+							<p class="teachers__text">
+								Начальник отдела высшей школы бизнеса КФУ, руководитель образовательного проекта в ПАО "Ак Барс Банк", заместитель директора МАОУ "Лицей-инженерный центр"
+							</p>
+						</div>
+					</li>
+					<li class="teachers__item">
+						<div class="teachers__item-wrap">
+							<img src='{% static "/img/teachers-2.png" %}' style="border-radius: 10px; width: 100%; box-shadow: -2px 4px 11px 2px rgb(30 30 30 / 37%);" alt="">
+							<p class="teachers__head">
+								<span class="teacherName">Рустам Айратович Нуриев</span>
+								<br>
+								<span class="teacherSubj">Зам. директора</span>
+							</p>
+							<p class="teachers__text">
+								Первый заместитель директора и руководитель проектной зоны образовательного комплекса "Технополис-КАИ"
+							</p>
+						</div>
+					</li>
+					<li class="teachers__item">
+						<div class="teachers__item-wrap">
+							<img src='{% static "/img/teachers-5.png" %}' style="border-radius: 10px;  width: 100%; box-shadow: -2px 4px 11px 2px rgb(30 30 30 / 37%);" alt="">
+							<p class="teachers__head">
+								<span class="teacherName">Инсаф Раисович Сибгатуллин</span>
+								<br><br>
+							</p>
+							<p class="teachers__text">
+								Куратор по работе со школами и преподавательским составом
+							</p>
+						</div>
+					</li>
+					<li class="teachers__item">
+						<div class="teachers__item-wrap">
+							<img src='{% static "/img/teachers-4.png" %}' style="border-radius: 10px; width: 100%;box-shadow: -2px 4px 11px 2px rgb(30 30 30 / 37%);" alt="">
+							<p class="teachers__head">
+								<span class="teacherName">Руководители направлений ИТ, 3D, Электроника</span>
+							</p>
+							<p class="teachers__text">
+								Профессионалы-практики, готовые дать свои знания и опыт нашим ученикам
+							</p>
+						</div>
+					</li>
+					<li class="teachers__item">
+						<div class="teachers__item-wrap">
+							<img src='{%static "/img/teachers-3.png" %}' style="border-radius: 10px;  width: 100%; box-shadow: -2px 4px 11px 2px rgb(30 30 30 / 37%);" alt="">
+							<p class="teachers__head">
+								<span class="teacherName">Анна Сергеевна Саяркина</span>
+								<br>
+								<span class="teacherSubj">SMM</span>
+							</p>
+							<p class="teachers__text">
+								Менеджер по работе с клиентами и развитию
+							</p>
+						</div>
+					</li>
+				</ul>
+			</div>
+		</div>
+		<!--<div class="projects">
+			<div class="container">
+				<h2>
+					<span id="job" class="underline-text">Работы наших учеников</span><br>
+				                                 на конференциях
+			    </h2>
+			    <ul class="projects__list">
+			    	<li class="projects__item">
+			    		<img src="{% static '/img/projects-2.png' %}" alt="">
+			    		<div class="projects__item-wrap">
+			    			<div class="projects__item-center">
+				    			<span class="projects__name">Умное освещение</span>
+				    			<p class="projects__author">
+				    				<span id="authorName">Валеева Азалия</span>,
+				    				<span id="authorClass">7 класс</span>
+				    			</p>
+				    			<p class="projects__text">
+				    				Собрала автоматическую систему умного освещения, реагирующую на движение и управляемую дистанционно с телефона
+				    			</p>
+			    			</div>
+			    		</div>
+			    	</li>
+			    	<li class="projects__item">
+			    		<div class="projects__item-wrap">
+			    			<div class="projects__item-center">
+			    				<span class="projects__name">Solar bank</span>
+				    			<p class="projects__author">
+				    				<span id="authorName">Мустафин Салават</span>,
+				    				<span id="authorClass">8 класс</span>
+				    			</p>
+				    			<p class="projects__text">
+				    				Провёл актуальное исследование на тему повербанков. Изучил работу с источнками энергии для электроники. Сейчас ведёт сборку своего прототипного устройства
+			    				</p>
+			    			</div>
+			    		</div>
+			    		<img src="{% static '/img/projects-2.png' %}" alt=""  >
+			    	</li>
+			    </ul>
+			</div>
+		</div>-->
+		<div class="documents">
+			<div class="container">
+				<ul class="documents__list">
+					<!--<li class="documents__item">
+						<div class="documents__content">
+							<h2>
+								У нас есть <br> 
+							    лицензия
+						    </h2>
+						    <p class="documents__text">
+						    	Наши образовательные программы соответствуют стандартам  школьного и дошкольного образования
+						    	<br> <br>
+						    	Вы можете получить налоговый вычет за образовательные услуги и использовать материнский капитал для оплаты некоторых программ обучения
+						    </p>
+						</div>
+					    <img class="documents__img" style="margin-bottom: 10%;" src="{% static '/img/license.png' %}" alt="лицензия">
+					</li>-->
+					<li class="documents__item">
+						<div id="sertif" class="documents__content ">
+							<h2>Выдаём <br> <span id="study_program" class="underline-text">сертификаты </span></h2>
+
+						    <p class="documents__text">
+								Наши обущающиеся имеют возможность получения сертификатов и удостоверений государственного образца
+						    </p>
+						</div>
+					    <img class="documents__img new_fragment" style="border-radius: 1.5rem;" src="{% static '/img/certificate.png' %}" alt="сертификат">
+					</li>
+				</ul>
+			</div>
+		</div>
+		{% endblock %}
+
+		{% block podval %}
+            {% include "main/podval.html" %}
+    	{% endblock %}
+
+
+
+
+
