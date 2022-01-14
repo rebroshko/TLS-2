@@ -25,7 +25,7 @@ SECRET_KEY = '881_jt=y*$1g(886&1o4_iizen$2o*g66ltrwpl%e3p)g9gjsy'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [*]
 
 
 # Application definition
